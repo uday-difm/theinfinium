@@ -1,10 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Rubik:ital,wght@0,300..900;1,300..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Open Sans", sans-serif;
-  --font-display: "Rubik", sans-serif;
-  --font-ui: "Work Sans", sans-serif;
+  --font-sans: var(--font-inter), sans-serif;
+  --font-display: var(--font-raleway), sans-serif;
+  --font-ui: var(--font-inter), sans-serif;
   
   --color-primary: #c49b3c;
   --color-primary-hover: #a37e2b;

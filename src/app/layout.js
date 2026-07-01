@@ -2,6 +2,19 @@ import "./globals.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { getLayoutData } from "../services/layout.service";
+import { Inter, Raleway } from "next/font/google";
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-inter",
+});
+
+const raleway = Raleway({
+  subsets: ["latin"],
+  weight: ["600", "700", "800"],
+  variable: "--font-raleway",
+});
 
 export const metadata = {
   title: "The Infinium - Exposing Lending Lies. Empowering Business Truths.",
@@ -16,10 +29,11 @@ export const viewport = {
 
 export default async function RootLayout({ children }) {
   const layout = await getLayoutData();
+  const fontClasses = `${inter.variable} ${raleway.variable}`;
 
   if (!layout.isActive) {
     return (
-      <html lang="en" className="h-full antialiased">
+      <html lang="en" className={`h-full antialiased ${fontClasses}`}>
         <head>
           <title>{layout.siteName} - Deactivated</title>
           <link rel="icon" href={layout.faviconUrl} />
@@ -46,7 +60,7 @@ export default async function RootLayout({ children }) {
 
   if (layout.maintenanceMode) {
     return (
-      <html lang="en" className="h-full antialiased">
+      <html lang="en" className={`h-full antialiased ${fontClasses}`}>
         <head>
           <title>{layout.siteName} - Maintenance</title>
           <link rel="icon" href={layout.faviconUrl} />
@@ -72,7 +86,7 @@ export default async function RootLayout({ children }) {
   }
 
   return (
-    <html lang="en" className="h-full">
+    <html lang="en" className={`h-full ${fontClasses}`}>
       <head>
         <link rel="icon" href={layout.faviconUrl} />
       </head>
