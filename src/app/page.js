@@ -3,6 +3,7 @@ import Sidebar from "../components/Sidebar";
 import { posts as localPosts } from "../data/posts";
 import { cms, getSeoMetadata } from "../lib/cms";
 import { getPosts } from "../services";
+import AdBanner from "../components/AdBanner";
 
 export const dynamic = "force-dynamic";
 
@@ -106,6 +107,9 @@ export default async function Home({ searchParams }) {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 font-sans">
+      {/* Top Banner Advertisement */}
+      <AdBanner zone="homepage-top" />
+
       {/* Search Header Info */}
       {searchQuery && (
         <div className="mb-8 border-b border-gray-200 pb-4">
