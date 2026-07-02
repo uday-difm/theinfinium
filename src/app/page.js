@@ -111,7 +111,7 @@ export default async function Home({ searchParams }) {
         <div className="mb-8 border-b border-gray-200 pb-4">
           <h2 className="text-xl font-bold text-gray-900">
             Search Results for:{" "}
-            <span className="text-primary">"{searchQuery}"</span>
+            <span className="text-primary">&quot;{searchQuery}&quot;</span>
           </h2>
           <p className="text-sm text-gray-500 mt-1">
             Found {latestPostsCount} matches

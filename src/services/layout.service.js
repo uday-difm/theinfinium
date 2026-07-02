@@ -77,6 +77,9 @@ export async function getLayoutData() {
       isActive,
       maintenanceMode: ws.maintenanceMode === true,
       maintenanceMessage: ws.maintenanceMessage || "We are currently undergoing scheduled maintenance. Please check back shortly.",
+      analytics: settingsResponse?.analytics || null,
+      securityControls: settingsResponse?.securityControls || null,
+      oneSignalAppId: settingsResponse?.oneSignalAppId || null,
     };
   } catch (err) {
     console.error("getLayoutData failed, using fallback:", err);

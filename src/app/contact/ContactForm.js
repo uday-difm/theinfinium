@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Sidebar from "../../components/Sidebar";
+import { cms } from "../../lib/cms";
 
 export default function ContactForm({ posts }) {
   const [formData, setFormData] = useState({
@@ -12,10 +13,55 @@ export default function ContactForm({ posts }) {
     message: ""
   });
   const [submitted, setSubmitted] = useState(false);
+  const [recaptchaKey, setRecaptchaKey] = useState(null);
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    async function loadSettings() {
+      try {
+        const siteId = process.env.NEXT_PUBLIC_SITE_ID || "infinium";
+        const baseUrl = process.env.NEXT_PUBLIC_CMS_BASE_URL || "http://localhost:3000";
+        const res = await fetch(`${baseUrl}/api/settings?siteId=${siteId}`);
+        if (res.ok) {
+          const data = await res.json();
+          const key = data?.data?.securityControls?.recaptchaSiteKey;
+          if (key) setRecaptchaKey(key);
+        }
+      } catch (err) {
+        console.error("Failed to load recaptcha settings:", err);
+      }
+    }
+    loadSettings();
+  }, []);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.name && formData.email && formData.message) {
+      let token = undefined;
+      if (recaptchaKey && typeof window !== "undefined" && window.grecaptcha) {
+        try {
+          token = await new Promise((resolve, reject) => {
+            window.grecaptcha.ready(() => {
+              window.grecaptcha
+                .execute(recaptchaKey, { action: "contact" })
+                .then(resolve)
+                .catch(reject);
+            });
+          });
+        } catch (err) {
+          console.error("reCAPTCHA execution failed:", err);
+        }
+      }
+
+      try {
+        await cms.submitContactForm({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          recaptchaToken: token,
+        });
+      } catch (err) {
+        console.error("Failed to submit contact form to CMS:", err);
+      }
       setSubmitted(true);
       setFormData({ name: "", email: "", subject: "", message: "" });
     }

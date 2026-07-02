@@ -90,7 +90,7 @@ export default async function AboutPage() {
 
               <blockquote>
                 <p className="border-l-4 border-primary pl-4 italic text-gray-650 font-medium my-4">
-                  "Transparency in commercial lending isn't just about regulatory check-boxes; it's about protecting the entrepreneurial spirit that fuels our economy."
+                  &quot;Transparency in commercial lending isn&apos;t just about regulatory check-boxes; it&apos;s about protecting the entrepreneurial spirit that fuels our economy.&quot;
                 </p>
               </blockquote>
 

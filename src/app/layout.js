@@ -89,6 +89,103 @@ export default async function RootLayout({ children }) {
     <html lang="en" className={`h-full ${fontClasses}`}>
       <head>
         <link rel="icon" href={layout.faviconUrl} />
+
+        {/* 1. Google Search Console Verification */}
+        {layout.analytics?.searchConsoleVerification && (
+          <meta name="google-site-verification" content={layout.analytics.searchConsoleVerification} />
+        )}
+
+        {/* 2. Google Analytics 4 */}
+        {layout.analytics?.gaMeasurementId && (
+          <>
+            <script async src={`https://www.googletagmanager.com/gtag/js?id=${layout.analytics.gaMeasurementId}`} />
+            <script dangerouslySetInnerHTML={{
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${layout.analytics.gaMeasurementId}', { page_path: window.location.pathname });
+              `
+            }} />
+          </>
+        )}
+
+        {/* 3. Microsoft Clarity */}
+        {layout.analytics?.clarityId && (
+          <script dangerouslySetInnerHTML={{
+            __html: `
+              (function(c,l,a,r,i,t,y){
+                  c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                  t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                  y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+              })(window,document,"clarity","script","${layout.analytics.clarityId}");
+            `
+          }} />
+        )}
+
+        {/* 4. Meta Pixel */}
+        {layout.analytics?.metaPixelId && (
+          <script dangerouslySetInnerHTML={{
+            __html: `
+              !function(f,b,e,v,n,t,s)
+              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+              n.queue=[];t=b.createElement(e);t.async=!0;
+              t.src=v;s=b.getElementsByTagName(e)[0];
+              s.parentNode.insertBefore(t,s)}(window, document,'script',
+              'https://connect.facebook.net/en_US/fbevents.js');
+              fbq('init', '${layout.analytics.metaPixelId}');
+              fbq('track', 'PageView');
+            `
+          }} />
+        )}
+
+        {/* 5. LinkedIn Tag */}
+        {layout.analytics?.linkedInTagId && (
+          <script dangerouslySetInnerHTML={{
+            __html: `
+              _linkedin_partner_id = "${layout.analytics.linkedInTagId}";
+              window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+              window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+              (function(l) {
+                if (!l) return;
+                var s = document.getElementsByTagName("script")[0];
+                var b = document.createElement("script");
+                b.type = "text/javascript";b.async = true;
+                b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+                s.parentNode.insertBefore(b, s);
+              })(window.lintrk);
+            `
+          }} />
+        )}
+
+        {/* 6. Google AdSense */}
+        {layout.analytics?.googleAdSenseId && (
+          <script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${layout.analytics.googleAdSenseId}`} crossorigin="anonymous" />
+        )}
+
+        {/* 7. OneSignal Push Notification */}
+        {layout.oneSignalAppId && (
+          <>
+            <script async src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" />
+            <script dangerouslySetInnerHTML={{
+              __html: `
+                window.OneSignalDeferred = window.OneSignalDeferred || [];
+                window.OneSignalDeferred.push(async function(OneSignal) {
+                  await OneSignal.init({
+                    appId: "${layout.oneSignalAppId}",
+                  });
+                });
+              `
+            }} />
+          </>
+        )}
+
+        {/* 8. Google reCAPTCHA v3 */}
+        {layout.securityControls?.recaptchaSiteKey && (
+          <script async src={`https://www.google.com/recaptcha/api.js?render=${layout.securityControls.recaptchaSiteKey}`} />
+        )}
       </head>
       <body className="flex min-h-full flex-col bg-slate-50">
         <Header
