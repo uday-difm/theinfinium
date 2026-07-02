@@ -80,6 +80,7 @@ export async function getLayoutData() {
       analytics: settingsResponse?.analytics || null,
       securityControls: settingsResponse?.securityControls || null,
       oneSignalAppId: settingsResponse?.oneSignalAppId || null,
+      rawSettings: settingsResponse || {},
     };
   } catch (err) {
     console.error("getLayoutData failed, using fallback:", err);
