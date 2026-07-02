@@ -1,5 +1,7 @@
+import { withCMS } from "@yourcompany/global-backend-next";
+
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig = withCMS({
   reactCompiler: true,
   transpilePackages: ["@yourcompany/global-backend-next"],
   images: {
@@ -10,15 +12,6 @@ const nextConfig = {
       },
     ],
   },
-  async redirects() {
-    return [
-      {
-        source: "/admin",
-        destination: `${process.env.NEXT_PUBLIC_CMS_BASE_URL || "http://localhost:3000"}/login`,
-        permanent: false,
-      },
-    ];
-  },
-};
+});
 
 export default nextConfig;
