@@ -4,7 +4,6 @@ import Footer from "../components/Footer";
 import { getLayoutData } from "../services/layout.service";
 import { Inter, Raleway } from "next/font/google";
 import { GlobalAnalytics, CookieConsentBanner, OneSignalScript } from "@yourcompany/global-backend-next/components";
-import VisitorTracker from "../components/VisitorTracker";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -107,7 +106,6 @@ export default async function RootLayout({ children }) {
         <OneSignalScript settings={layout.rawSettings} />
       </head>
       <body className="flex min-h-full flex-col bg-slate-50">
-        <VisitorTracker />
         <Header
           siteName={layout.siteName}
           logoUrl={layout.logoUrl}
