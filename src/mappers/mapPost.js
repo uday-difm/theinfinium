@@ -7,6 +7,7 @@ export function mapPost(post) {
   if (!post) return null;
 
   return {
+    id: post.id || post._id || null,
     slug: post.slug,
     title: post.title,
     category: post.categories?.[0]?.name || "MCA & Lending",
