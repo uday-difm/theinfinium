@@ -34,9 +34,9 @@ export default async function Footer({
       : [
           { label: "About", url: "/about" },
           { label: "Contact Us", url: "/contact" },
-          { label: "Terms of Use", url: "/" },
-          { label: "Cookie Policy", url: "/" },
-          { label: "Privacy Policy", url: "/" },
+          { label: "Terms of Use", url: "/legal/terms" },
+          { label: "Cookie Policy", url: "/legal/cookie" },
+          { label: "Privacy Policy", url: "/legal/privacy" },
         ];
 
   // Retrieve dynamic description from CMS footer builder if available

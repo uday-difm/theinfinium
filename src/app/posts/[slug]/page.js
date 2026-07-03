@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Sidebar from "../../../components/Sidebar";
 import ShareButton from "../../../components/ShareButton";
+import CommentsSection from "../../../components/CommentsSection";
 
 import { cms, getSeoMetadata } from "../../../lib/cms";
 import { getPosts } from "../../../services";
@@ -228,6 +229,9 @@ export default async function PostPage({ params }) {
                 </p>
               </div>
             </div>
+
+            {/* Comments Section */}
+            <CommentsSection postId={post.id} />
           </div>
 
           {/* Right Column: Sidebar */}
